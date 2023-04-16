@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TGolla.Swashbuckle.AspNetCore", "TGolla.Swashbuckle.AspNetCore\TGolla.Swashbuckle.AspNetCore.csproj", "{4D126C61-08B8-4F31-A38D-251F5127FE30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TGolla.AspNetCore.Mvc.Filters", "TGolla.AspNetCore.Mvc.Filters\TGolla.AspNetCore.Mvc.Filters.csproj", "{15096472-205E-4CDE-8F26-C2D45B0EA0E3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4D126C61-08B8-4F31-A38D-251F5127FE30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D126C61-08B8-4F31-A38D-251F5127FE30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D126C61-08B8-4F31-A38D-251F5127FE30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D126C61-08B8-4F31-A38D-251F5127FE30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15096472-205E-4CDE-8F26-C2D45B0EA0E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15096472-205E-4CDE-8F26-C2D45B0EA0E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15096472-205E-4CDE-8F26-C2D45B0EA0E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15096472-205E-4CDE-8F26-C2D45B0EA0E3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {077C5AD1-17F6-487E-98DD-2BD24AE1C4A1}
+	EndGlobalSection
+EndGlobal
