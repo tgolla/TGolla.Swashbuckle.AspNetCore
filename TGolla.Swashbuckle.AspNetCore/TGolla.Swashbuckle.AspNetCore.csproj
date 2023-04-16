@@ -3,7 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disabled</Nullable>
+    <RootNamespace>TGolla.Swashbuckle.AspNetCore.SwaggerGen</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
