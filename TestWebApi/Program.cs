@@ -85,6 +85,10 @@ string currentDocumentName = "current";
 
 SwaggerControllerOrder<ControllerBase> swaggerControllerOrder = new SwaggerControllerOrder<ControllerBase>(Assembly.GetEntryAssembly());
 
+// Note: As of 4/17/2023 adding includeControllerXmlComments: true for IncludeXmlComments breaks swaggerControllerOrder.
+//     c.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
+// Reference https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/1960
+
 builder.Services.AddSwaggerGen(c =>
 {
     // Sets the order action by to use the SwaggerControllerOrder attribute to reorder controllers in a non-alphabetical order
@@ -108,10 +112,10 @@ builder.Services.AddSwaggerGen(c =>
     // Note the filename is generated from the assembly name.
     var xmlFile = $"{Assembly.GetEntryAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    c.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
+    c.IncludeXmlComments(xmlPath);
 
     c.EnableAnnotations();
-
+    
     c.OperationFilter<AppendAuthorizationToDescription>();
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
