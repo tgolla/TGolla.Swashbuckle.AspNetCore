@@ -1,14 +1,67 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
+using NetCore.AutoRegisterDi;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Reflection;
+using TestWebApi.Services;
 using TGolla.Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var assembliesToScan = new[]
+{
+    Assembly.GetAssembly(typeof(GenerateTokensService))
+};
+
+builder.Services.RegisterAssemblyPublicNonGenericClasses(assembliesToScan)
+    .Where(c => c.Name.EndsWith("Service"))
+    .AsPublicImplementedInterfaces();
+
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+//}).AddJwtBearer(o =>
+//{
+//    o.TokenValidationParameters = new TokenValidationParameters
+//    {
+//        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+//        ValidAudience = builder.Configuration["Jwt:Audience"],
+//        IssuerSigningKey = new SymmetricSecurityKey
+//        (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+//        ValidateIssuer = true,
+//        ValidateAudience = true,
+//        ValidateLifetime = false,
+//        ValidateIssuerSigningKey = true
+//    };
+//});
+////TODO: ***** Security group roles (policies) of APIs. Modify when adding security group role to APIs. *****
+//List<string> securityGroups = new List<string> { "Administrator", "Manager" };
+
+//builder.Services.AddAuthorization(options =>
+//{
+//    // Add policy for each group the user belongs to.
+//    foreach (string securityGroup in securityGroups)
+//    {
+//        options.AddPolicy(securityGroup, policy =>
+//            policy.RequireAuthenticatedUser().RequireAssertion(context =>
+//            {
+//                // Loop through groups claims.
+//                foreach (var claim in context.User.Claims.Where(c => c.Type.Equals("groups")))
+//                {
+//                    if (claim.Value.Equals(securityGroup))
+//                        return true;
+//                }
+
+//                return false;
+//            }));
+//    }
+//});
 
 string assemblyName = Assembly.GetEntryAssembly().GetName().Name;
 string assemblyInformationalVersion = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;

@@ -12,11 +12,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.16" />
+    <PackageReference Include="NetCore.AutoRegisterDi" Version="2.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TestWebApi.Services\TestWebApi.Services.csproj" />
     <ProjectReference Include="..\TGolla.Swashbuckle.AspNetCore\TGolla.Swashbuckle.AspNetCore.csproj" />
   </ItemGroup>
 
