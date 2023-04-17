@@ -4,6 +4,9 @@ using TGolla.Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace TestWebApi.Controllers
 {
+    /// <summary>
+    /// The authorization test API calls.
+    /// </summary>
     [Authorize]
     [Route("[controller]")]
     [ApiController]
@@ -14,6 +17,7 @@ namespace TestWebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("Test")]
+        [Authorize(Policy = "Manager")]
         public IActionResult Test() { return Ok(); }
     }
 }

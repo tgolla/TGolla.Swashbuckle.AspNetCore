@@ -1,12 +1,19 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NetCore.AutoRegisterDi;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Reflection;
+using System.Security.Cryptography;
 using TestWebApi.Services;
 using TGolla.Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
+
+ConfigurationManager configuration = builder.Configuration;
+JwtSettings jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>();
 
 var assembliesToScan = new[]
 {
@@ -21,47 +28,52 @@ builder.Services.RegisterAssemblyPublicNonGenericClasses(assembliesToScan)
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-//}).AddJwtBearer(o =>
-//{
-//    o.TokenValidationParameters = new TokenValidationParameters
-//    {
-//        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-//        ValidAudience = builder.Configuration["Jwt:Audience"],
-//        IssuerSigningKey = new SymmetricSecurityKey
-//        (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
-//        ValidateIssuer = true,
-//        ValidateAudience = true,
-//        ValidateLifetime = false,
-//        ValidateIssuerSigningKey = true
-//    };
-//});
-////TODO: ***** Security group roles (policies) of APIs. Modify when adding security group role to APIs. *****
-//List<string> securityGroups = new List<string> { "Administrator", "Manager" };
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => {
+        // Creating the RSA key.
+        RSACryptoServiceProvider provider = new RSACryptoServiceProvider();
+        provider.ImportSubjectPublicKeyInfo(new ReadOnlySpan<byte>(Convert.FromBase64String(jwtSettings.PublicKey)), out _);
+        RsaSecurityKey rsaSecurityKey = new RsaSecurityKey(provider);
 
-//builder.Services.AddAuthorization(options =>
-//{
-//    // Add policy for each group the user belongs to.
-//    foreach (string securityGroup in securityGroups)
-//    {
-//        options.AddPolicy(securityGroup, policy =>
-//            policy.RequireAuthenticatedUser().RequireAssertion(context =>
-//            {
-//                // Loop through groups claims.
-//                foreach (var claim in context.User.Claims.Where(c => c.Type.Equals("groups")))
-//                {
-//                    if (claim.Value.Equals(securityGroup))
-//                        return true;
-//                }
+        options.IncludeErrorDetails = true; // Great for debugging.
+        options.SaveToken = true;
 
-//                return false;
-//            }));
-//    }
-//});
+        // Configure the actual Bearer validation
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            IssuerSigningKey = rsaSecurityKey,
+            ValidAudience = jwtSettings.Audience,
+            ValidIssuer = jwtSettings.Issuer,
+            RequireSignedTokens = true,
+            RequireExpirationTime = true, // "exp"
+            ValidateLifetime = true, // "exp" will be validated.
+            ValidateAudience = true,
+            ValidateIssuer = true
+        };
+    });
+
+//TODO: ***** Security group roles (policies) of APIs. Modify when adding security group role to APIs. *****
+List<string> securityGroups = new List<string> { "Administrator", "Manager" };
+
+builder.Services.AddAuthorization(options =>
+{
+    // Add policy for each group the user belongs to.
+    foreach (string securityGroup in securityGroups)
+    {
+        options.AddPolicy(securityGroup, policy =>
+            policy.RequireAuthenticatedUser().RequireAssertion(context =>
+            {
+                // Loop through groups claims.
+                foreach (var claim in context.User.Claims.Where(c => c.Type.Equals("groups")))
+                {
+                    if (claim.Value.Equals(securityGroup))
+                        return true;
+                }
+
+                return false;
+            }));
+    }
+});
 
 string assemblyName = Assembly.GetEntryAssembly().GetName().Name;
 string assemblyInformationalVersion = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
@@ -136,7 +148,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseSwagger(c =>
