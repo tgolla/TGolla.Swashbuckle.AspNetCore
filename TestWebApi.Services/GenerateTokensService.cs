@@ -11,6 +11,9 @@ using System.Text.RegularExpressions;
 
 namespace TestWebApi.Services
 {
+    /// <summary>
+    /// The generate tokens service.
+    /// </summary>
     public class GenerateTokensService : IGenerateTokensService
     {
         private readonly JwtSettings jwtSettings;
@@ -24,8 +27,20 @@ namespace TestWebApi.Services
             jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>();
         }
 
+        /// <summary>
+        /// Generates a JWT token.
+        /// </summary>
+        /// <param name="privateKey">The JWT RSA private key.</param>
+        /// <param name="issuer">The token issuer.</param>
+        /// <param name="audience">The token audience.</param>
+        /// <param name="expires">The number of seconds before the token expires.</param>
+        /// <param name="email">The user email.</param>
+        /// <param name="givenName">The user's given name.</param>
+        /// <param name="familyName">The user's family name.</param>
+        /// <param name="groups">A list of the user's group roles.</param>
+        /// <returns>A JWT token.</returns>
         public string GenerateToken(string privateKey, string issuer, string audience, uint expires, 
-            string email, string giveName, string familyName, IList<string> groups)
+            string email, string givenName, string familyName, IList<string> groups)
         {
             // Creating the RSA key.
             RSACryptoServiceProvider provider = new RSACryptoServiceProvider();
@@ -43,7 +58,7 @@ namespace TestWebApi.Services
             claimsIdentity.AddClaim(new Claim(JwtRegisteredClaimNames.Exp, (secondsSinceEpoch + expires).ToString()));
             claimsIdentity.AddClaim(new Claim(JwtRegisteredClaimNames.Iss, issuer));
             claimsIdentity.AddClaim(new Claim("email", email));
-            claimsIdentity.AddClaim(new Claim("given_name", giveName));
+            claimsIdentity.AddClaim(new Claim("given_name", givenName));
             claimsIdentity.AddClaim(new Claim("family_name", familyName));
             claimsIdentity.AddClaim(new Claim("groups", JsonSerializer.Serialize(groups), JsonClaimValueTypes.JsonArray));
 
@@ -64,7 +79,7 @@ namespace TestWebApi.Services
         {
             IList<string> groups = new List<string>();
 
-            return GenerateToken(jwtSettings.PrivateKey, jwtSettings.Issuer, jwtSettings.Audience, 3600000,
+            return GenerateToken(jwtSettings.PrivateKey, jwtSettings.Issuer, jwtSettings.Audience, 3600,
                 "someone@domain.com", "Some", "User", groups);
         }
 
@@ -76,7 +91,7 @@ namespace TestWebApi.Services
         {
             IList<string> groups = new List<string> { "Manager" };
 
-            return GenerateToken(jwtSettings.PrivateKey, jwtSettings.Issuer, jwtSettings.Audience, 3600000,
+            return GenerateToken(jwtSettings.PrivateKey, jwtSettings.Issuer, jwtSettings.Audience, 3600,
                 "management@domain.com", "Management", "User", groups);
         }
 
@@ -88,7 +103,7 @@ namespace TestWebApi.Services
         {
             IList<string> groups = new List<string> { "Administrator" };
 
-            return GenerateToken(jwtSettings.PrivateKey, jwtSettings.Issuer, jwtSettings.Audience, 3600000,
+            return GenerateToken(jwtSettings.PrivateKey, jwtSettings.Issuer, jwtSettings.Audience, 3600,
                 "administrator@domain.com", "Administrative", "User", groups);
         }
 
@@ -100,7 +115,7 @@ namespace TestWebApi.Services
         {
             IList<string> groups = new List<string>{ "Manager", "Administrator" };
 
-            return GenerateToken(jwtSettings.PrivateKey, jwtSettings.Issuer, jwtSettings.Audience, 3600000,
+            return GenerateToken(jwtSettings.PrivateKey, jwtSettings.Issuer, jwtSettings.Audience, 3600,
                 "management.administrator@domain.com", "Management", "User w/Administrator", groups);
         }
     }
