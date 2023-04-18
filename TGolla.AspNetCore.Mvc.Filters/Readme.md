@@ -1,4 +1,37 @@
-﻿The first thing to realize is that the Authorize attribute Policy setting is singular unlike Roles which can be plural and that multiple policies are treated on an AND basis, unlike a list of roles which is treated on an OR basis.
+﻿This package implements the code solution for a StackOverflow question on how to secure an API call with more then one policy.
+
+StackOverflow 
+https://stackoverflow.com/questions/51443605/how-to-include-multiple-policies
+
+# Question - How to include multiple policies
+
+I have defined 2 policies, ```ADD``` and ```SUB``` as shown below.
+
+```csharp
+options.AddPolicy("ADD", policy =>
+    policy.RequireClaim("Addition", "add"));
+
+options.AddPolicy("SUB", policy =>
+    policy.RequireClaim("Substraction", "subs"));
+```
+
+All that I want to do is to include 2 policies on a controller method. How can I perform this operation.
+
+```csharp
+ [Authorize(Policy = "ADD, SUB")]
+ [HttpPost]
+ public IActionResult PerformCalculation()
+ {
+ }
+ ```
+
+However, this gives me an error:
+
+    InvalidOperationException: The AuthorizationPolicy named: 'ADD, SUB' was not found
+
+# Answer
+
+The first thing to realize is that the Authorize attribute Policy setting is singular unlike Roles which can be plural and that multiple policies are treated on an AND basis, unlike a list of roles which is treated on an OR basis.
 
 In your example code ```“ADD, SUB”``` is considered a single policy name.  If you want to attribute you method with both policies, your code should be as follows.
 
@@ -30,6 +63,9 @@ public class AuthorizeOnAnyOnePolicyAttribute : TypeFilterAttribute
     /// <param name="policies">A comma delimited list of policies that are allowed to access the resource.</param>
     public AuthorizeOnAnyOnePolicyAttribute(string policies) : base(typeof(AuthorizeOnAnyOnePolicyFilter))
     {
+        Regex commaDelimitedWhitespaceCleanup = new Regex("\\s+,\\s+|\\s+,|,\\s+",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled);
+
         Arguments = new object[] { policies };
     }
 }
@@ -80,7 +116,7 @@ public class AuthorizeOnAnyOnePolicyFilter : IAsyncAuthorizationFilter
 }
 ```
 
-With the policies defined as shown in the question you would attribute the  method as follows.
+With the policies defined as shown in the question you would attribute the method as follows.
 
 ```csharp
 [AuthorizeOnAnyOnePolicy("ADD,SUB")]
