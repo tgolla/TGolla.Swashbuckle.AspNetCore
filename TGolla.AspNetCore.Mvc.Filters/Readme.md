@@ -1,4 +1,4 @@
-﻿This package implements the code solution for a StackOverflow question on how to secure an API call with more then one policy.
+﻿This package implements the code solution for a StackOverflow question on how to secure an API call with more than one policy.
 
 StackOverflow 
 https://stackoverflow.com/questions/51443605/how-to-include-multiple-policies
