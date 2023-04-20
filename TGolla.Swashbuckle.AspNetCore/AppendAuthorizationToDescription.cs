@@ -35,7 +35,7 @@ namespace TGolla.Swashbuckle.AspNetCore.SwaggerGen
             List<string> authorizeAttributeRoles = authorizeAttributes.Where(x => !string.IsNullOrEmpty(x.Roles))
                 .OrderBy(x => x.Roles).Select(x => x.Roles).ToList();
 
-            // Get list of authorize any policy policies. 
+            // Get list of authorize on any one policy policies. 
             List<string> authorizeOnAnyOnePolicyAttributePolicies = new List<string>();
             if (authorizeOnAnyOnePolicyAttributes.Any())
             {
