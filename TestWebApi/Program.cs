@@ -90,15 +90,22 @@ SwaggerControllerOrder<ControllerBase> swaggerControllerOrder = new SwaggerContr
 
 builder.Services.AddSwaggerGen(c =>
 {
-    // Sets the order action by to use the SwaggerControllerOrder attribute to reorder controllers in a non-alphabetical order
-    // and removes an assigned group name (i.e. [ApiExplorerSettings(GroupName = "Hidden")]) from the sort order.
+    // Sets the order action by to use the SwaggerControllerOrder attribute to reorder controllers in a non-alphabetical order.
+    // To see the difference between using the controller sort order and not, comment out the following line.
+    //c.OrderActionsBy((apiDesc) => $"{swaggerControllerOrder.SortKey(apiDesc.ActionDescriptor.RouteValues["controller"])}");
+
+    // Alternate example of sort by controller and removing an assigned group name (i.e. [ApiExplorerSettings(GroupName = "Hidden")]) from the sort order.
     c.OrderActionsBy((apiDesc) => $"{swaggerControllerOrder.SortKey(apiDesc.ActionDescriptor.RouteValues["controller"])}_{apiDesc.RelativePath}");
 
     // Alternate example of sort by controller and then HTTP method (alphabetical). 
     //c.OrderActionsBy((apiDesc) => $"{apiDesc.ActionDescriptor.RouteValues["controller"]}_{apiDesc.HttpMethod}");
+    // Or...
+    //c.OrderActionsBy(apiDesc => $"{swaggerControllerOrder.SortKey(apiDesc.ActionDescriptor.RouteValues["controller"])}_{apiDesc.HttpMethod}");
 
     // Alternate example of sort by controller and then HTTP method as ordered in array defined above. 
     //c.OrderActionsBy(apiDesc => $"{apiDesc.ActionDescriptor.RouteValues["controller"]}_{Array.IndexOf(methodsOrder, apiDesc.HttpMethod.ToLower())}");
+    // Or...
+    //c.OrderActionsBy(apiDesc => $"{swaggerControllerOrder.SortKey(apiDesc.ActionDescriptor.RouteValues["controller"])}_{Array.IndexOf(methodsOrder, apiDesc.HttpMethod.ToLower())}");
 
     // Adds the public Swagger document.
     c.SwaggerDoc(currentDocumentName, new OpenApiInfo
