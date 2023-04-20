@@ -6,7 +6,7 @@ using NetCore.AutoRegisterDi;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Reflection;
 using System.Security.Cryptography;
-using TestWebApi.Services;
+using AppendAuthorizationToDescriptionExample.Services;
 using TGolla.Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -76,7 +76,7 @@ builder.Services.AddAuthorization(options =>
 
 string assemblyName = Assembly.GetEntryAssembly().GetName().Name;
 string assemblyInformationalVersion = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
-string title = "Test Web API";
+string title = "Append Authorization To Description Example";
 string currentDocumentName = "current";
 
 // Used by alternate example of sort by controller and then HTTP method as ordered in array.

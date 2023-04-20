@@ -1,4 +1,4 @@
-﻿namespace TestWebApi.Services
+﻿namespace AppendAuthorizationToDescriptionExample.Services
 { 
     /// <summary>
     /// 

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TGolla.AspNetCore.Mvc.Filters;
 using TGolla.Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace TestWebApi.Controllers
+namespace AppendAuthorizationToDescriptionExample.Controllers
 {
     /// <summary>
     /// The authorization test API calls.

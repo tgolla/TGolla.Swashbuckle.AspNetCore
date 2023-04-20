@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TestWebApi.Services;
+using AppendAuthorizationToDescriptionExample.Services;
 using TGolla.Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace TestWebApi.Controllers
+namespace AppendAuthorizationToDescriptionExample.Controllers
 {
     /// <summary>
     /// Generate tokens API calls.

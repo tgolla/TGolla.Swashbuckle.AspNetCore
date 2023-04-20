@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TestWebApi.Services\TestWebApi.Services.csproj" />
+    <ProjectReference Include="..\AppendAuthorizationToDescriptionExample.Services\AppendAuthorizationToDescriptionExample.Services.csproj" />
     <ProjectReference Include="..\TGolla.AspNetCore.Mvc.Filters\TGolla.AspNetCore.Mvc.Filters.csproj" />
     <ProjectReference Include="..\TGolla.Swashbuckle.AspNetCore\TGolla.Swashbuckle.AspNetCore.csproj" />
   </ItemGroup>

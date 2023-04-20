@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TGolla.Swashbuckle.AspNetCo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TGolla.AspNetCore.Mvc.Filters", "TGolla.AspNetCore.Mvc.Filters\TGolla.AspNetCore.Mvc.Filters.csproj", "{15096472-205E-4CDE-8F26-C2D45B0EA0E3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestWebApi", "TestWebApi\TestWebApi.csproj", "{52206145-5B0E-42D9-B558-FA2F7C3AED31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppendAuthorizationToDescriptionExample", "AppendAuthorizationToDescriptionExample\AppendAuthorizationToDescriptionExample.csproj", "{52206145-5B0E-42D9-B558-FA2F7C3AED31}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestWebApi.Services", "TestWebApi.Services\TestWebApi.Services.csproj", "{BC3AB94C-2C0F-4AC9-A8C1-0F74E4A61472}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppendAuthorizationToDescriptionExample.Services", "AppendAuthorizationToDescriptionExample.Services\AppendAuthorizationToDescriptionExample.Services.csproj", "{BC3AB94C-2C0F-4AC9-A8C1-0F74E4A61472}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3D9ECCC3-2DDD-41F9-834A-ED18DB310AA8}"
 	ProjectSection(SolutionItems) = preProject

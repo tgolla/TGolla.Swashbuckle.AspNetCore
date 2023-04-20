@@ -1,15 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 
-namespace TestWebApi.Services
+namespace AppendAuthorizationToDescriptionExample.Services
 {
     /// <summary>
     /// The generate tokens service.
@@ -19,7 +15,7 @@ namespace TestWebApi.Services
         private readonly JwtSettings jwtSettings;
 
         /// <summary>
-        /// Initializes a new instance of TestWebApiService.
+        /// Initializes a new instance of GenerateTokensService.
         /// </summary>
         /// <param name="configuration">Represents a set of key/value application configuration properties.</param>
         public GenerateTokensService(IConfiguration configuration)
