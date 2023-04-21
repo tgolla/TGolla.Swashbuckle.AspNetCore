@@ -4,15 +4,43 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
-    <RootNamespace>TGolla.Swashbuckle.AspNetCore.SwaggerGen</RootNamespace>
+    <RootNamespace>TGolla.Swashbuckle.AspNetCore</RootNamespace>
+    <PackageId>TGolla.Swashbuckle.AspNetCore</PackageId>
+    <Version>0.9.0.0</Version>
+    <Authors>Terence F. Golla</Authors>
+    <Company>Cimarron Technology Solutions</Company>
+    <Product>TGolla.Swashbuckle.AspNetCore</Product>
+    <Description>
+      This repository contains the following Swashbuckle addons.
+       - Custom Ordering of Controllers
+       - Adding Authentication/Authorization Information to Swagger API Documentation with Swashbuckle
+    </Description>
+    <Copyright>2023 by Terence F. Golla</Copyright>
+    <PackageProjectUrl>https://github.com/tgolla/TGolla.Swashbuckle.AspNetCore</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/tgolla/TGolla.Swashbuckle.AspNetCore</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <AssemblyVersion>0.9.0.0</AssemblyVersion>
+    <FileVersion>0.9.0.0</FileVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>TGolla.Swashbuckle.AspNetCore</Title>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
+    <PackageTags>ASP.NET;Swagger;Swashbuckle;Attribute;Order Controllers;Authentication;Authorization;policy;policies;role;roles;SwaggerControllerOrderAttribute;IOperationFilter;TGolla.Swashbuckle.AspNetCore</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <IncludeSymbols>True</IncludeSymbols>
+    <PackageReleaseNotes>This is an initial pre-release.</PackageReleaseNotes>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+    <PackageReference Include="TGolla.AspNetCore.Mvc.Filters" Version="0.9.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TGolla.AspNetCore.Mvc.Filters\TGolla.AspNetCore.Mvc.Filters.csproj" />
+    <None Update="Readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
