@@ -1,14 +1,12 @@
-﻿This article is an adaptation of an article written by Rob Janssen ([RobIII](https://blog.robiii.nl/ 'RobIII')) in 2018 on customizing the order in which controllers are display in the [Swagger UI by Swashbuckle](https://github.com/domaindrivendev/Swashbuckle.AspNetCore "Swagger UI by Swashbuckle").  It addresses the depreciation of the method OrderActionGroupsBy which is no longer available when using ```AddSwaggerGen```, ```UseSwagger``` and ```UseSwaggerUI``` in your projects ```startup.cs``` file by using the ```AddSwaggerGen``` method ```OrderActionsBy``` in the configuration.
+﻿This article is an adaptation of an article written by Rob Janssen ([RobIII](https://blog.robiii.nl/ 'RobIII')) in 2018 on customizing the order in which controllers are display in the [Swagger UI by Swashbuckle](https://github.com/domaindrivendev/Swashbuckle.AspNetCore "Swagger UI by Swashbuckle").  It addresses the depreciation of the method OrderActionGroupsBy which is no longer available when using ```AddSwaggerGen```, ```UseSwagger``` and ```UseSwaggerUI``` in your ASP.NET API projects by using the ```AddSwaggerGen``` method ```OrderActionsBy``` in the configuration.
 
 By default, when using Swashbuckle to generate a Swagger document, controllers are ordered alphabetically.  There are however situations where alphabetical ordering is not best for your documentation.  For example, consider an API project in which each controller represents a type of theater (Arena, Black Box, Proscenium, Thrust).  Instead of sorting these alphabetically it makes more sense to order them as they are normally sorted when teaching theater (Proscenium, Thrust, Arena, Black Box).
 
-In this article we will look at using a custom attribute to affect the order controllers are displayed in the Swagger documentation.  Again, most of this code was adapted from Rob Janssen’s article [Swashbuckle Custom Ordering of Controllers](https://blog.robiii.nl/2018/08/swashbuckle-custom-ordering-of.html "Swashbuckle Custom Ordering of Controllers"). A complete example can be found on GitHub at... 
-
-[https://github.com/tgolla/SwashbuckleCustomOrderingControllersExample](https://github.com/tgolla/SwashbuckleCustomOrderingControllersExample "Swashbuckle Custom Ordering Controllers Example")
+In this article we will look at using a custom attribute to affect the order controllers are displayed in the Swagger documentation.  Again, most of this code was adapted from Rob Janssen’s article [Swashbuckle Custom Ordering of Controllers](https://blog.robiii.nl/2018/08/swashbuckle-custom-ordering-of.html "Swashbuckle Custom Ordering of Controllers"). A complete example can be found in the GitHub repository [TGolla.Swashbuckle.AspNetCore](https://github.com/tgolla/TGolla.Swashbuckle.AspNetCore/tree/main/SwashbuckleCustomOrderingControllersExample) and you can start using the ```SwaggerControllerOrder``` attribute in your project by installing the NuGet package [TGolla.Swashbuckle.AspNetCore](https://www.nuget.org/packages/TGolla.Swashbuckle.AspNetCore).
 
 ## How It Works
 
-When adding Swagger to your project using the Swashbuckle tools you have the ability to alter the sort order of the Controllers and even the individual APIs in the configuration information of the ```AddSwaggerGen``` method using ```OrderActionsBy```.  With ```OrderActionsBy``` you use a lambda expression to alter the sort key string use to order (group) API calls. 
+When adding Swagger to your project using the Swashbuckle tools you have the ability to alter the sort order of the Controllers and even the individual APIs in the configuration information of the ```AddSwaggerGen``` method using ```OrderActionsBy```.  With ```OrderActionsBy``` you use a lambda expression to alter the sort key string used to order (group) API calls. 
 
 By default, the sort key is set to the first tag which by default, is set to the controller’s name, hence controllers are sorted alphabetically after which API calls are normally ordered by relative path.  The following code represents the equivalent to the predefined default as defined using  ```OrderActionsBy```.
 
@@ -94,7 +92,7 @@ In our example we will want to annotate each of our controllers as follows.
     }
 ```
 
-Next we need to create a class that will collect a list of controllers with the SwaggerControllerOrder attribute value (```SwaggerControllerOrder```).
+Next we need to create a class that will collect a list of controllers with the ```SwaggerControllerOrder``` attribute value.
 
 ```
 using System.Reflection;
@@ -203,7 +201,7 @@ namespace TGolla.Swashbuckle.AspNetCore.SwaggerGen
 }
 ```
 
-To use the class, we define an instance in the ``` ConfigureServices``` method of your ```Startup.cs```.
+To use the class, we define an instance in the ``` ConfigureServices``` method in the ```Program.cs``` file.
 
 ```
 SwaggerControllerOrder<ControllerBase> swaggerControllerOrder = new SwaggerControllerOrder<ControllerBase>(Assembly.GetEntryAssembly());
@@ -211,7 +209,7 @@ SwaggerControllerOrder<ControllerBase> swaggerControllerOrder = new SwaggerContr
 
 When instantiated the ```SwaggerControllerOrder``` class searches the assembly for controllers of type ```ControllerBase``` and builds a dictionary list of controller names with their associated ``` SwaggerControllerOrder``` attribute value.  Those without the ``` SwaggerControllerOrder``` attribute are not place in the list and will be assigned the default max value 4294967295.
 
-With the class instantiated we can now use it when adding the Swagger generation service by adding an ``` OrderActionsBy``` method call to the ``` AddSwaggerGen``` configuration in the ```program.cs``` file.
+With the class instantiated we can now use it when adding the Swagger generation service by adding an ``` OrderActionsBy``` method call to the ``` AddSwaggerGen``` configuration in the ```Program.cs``` file.
 
 ```
 builder.Services.AddSwaggerGen(c =>
@@ -251,4 +249,3 @@ c.OrderActionsBy(apiDesc => $"{apiDesc.ActionDescriptor.RouteValues["controller"
 The possibilities are endless, and this example could even be taken one step further by adding an attribute to annotate ``` IActionResult``` (API) calls.
 
 Ref: [https://github.com/domaindrivendev/Swashbuckle.AspNetCore#change-operation-sort-order-eg-for-ui-sorting](https://github.com/domaindrivendev/Swashbuckle.AspNetCore#change-operation-sort-order-eg-for-ui-sorting "Change Operation Sort Order (e.g. for UI Sorting)")
-
