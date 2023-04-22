@@ -10,6 +10,18 @@ namespace TGolla.Swashbuckle.AspNetCore.SwaggerGen
     /// </summary>
     public class AppendAuthorizationToDescription : IOperationFilter
     {
+        // Boolean used to determine if the AllowAnonymous description should be added.
+        private bool excludeAllowAnonymousDescription = false;
+
+        /// <summary>
+        /// Initializes a new instance of the AppendAuthorizationToDescription class. 
+        /// </summary>
+        /// <param name="excludeAllowAnonymousDescription">Boolean used to determine if the AllowAnonymous description should be added.</param>
+        public AppendAuthorizationToDescription(bool excludeAllowAnonymousDescription = false)
+        {
+            this.excludeAllowAnonymousDescription = excludeAllowAnonymousDescription;
+        }
+
         /// <summary>
         /// Applys the appended API authentication/authorization information to the operation description.
         /// </summary>
@@ -20,7 +32,9 @@ namespace TGolla.Swashbuckle.AspNetCore.SwaggerGen
         {
             if (context.GetControllerAndActionAttributes<AllowAnonymousAttribute>().Any())
             {
-                operation.Description += "\r\n\r\nAuthentication/authorization is not required.";
+                if (!excludeAllowAnonymousDescription)
+                    operation.Description += "\r\n\r\nAuthentication/authorization is not required.";
+
                 return;
             }
 
