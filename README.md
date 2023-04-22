@@ -7,6 +7,6 @@ This repository contains the following Swashbuckle addons which are part of the 
 
 
 
-There is also a complementary MVC filter authorization filter designed to secure an API call with more than one policy which can be found in the NuGet package [TGolla.AspNetCore.Mvc.Filters](https://www.nuget.org/packages/TGolla.AspNetCore.Mvc.Filters).
+There is also a complementary MVC authorization filter designed to secure an API call with more than one policy which can be found in the NuGet package [TGolla.AspNetCore.Mvc.Filters](https://www.nuget.org/packages/TGolla.AspNetCore.Mvc.Filters).
 
 - [Authorize On Any One Policy](https://github.com/tgolla/TGolla.Swashbuckle.AspNetCore/blob/main/TGolla.AspNetCore.Mvc.Filters/Readme.md)
