@@ -123,7 +123,8 @@ builder.Services.AddSwaggerGen(c =>
 
     c.EnableAnnotations();
     
-    c.OperationFilter<AppendAuthorizationToDescription>();
+    //TODO: Document...
+    c.OperationFilter<AppendAuthorizationToDescription>(true);
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -143,6 +144,7 @@ builder.Services.AddSwaggerGen(c =>
         }
     };
 
+    //TODO: Document...
     //c.AddSecurityRequirement(new OpenApiSecurityRequirement()
     //            {
     //                {
@@ -150,6 +152,8 @@ builder.Services.AddSwaggerGen(c =>
     //                    new List<string>()
     //                }
     //            });
+
+    //TODO: Document...
     c.OperationFilter<AddSecurityRequirement>(addSecurityRequirementOpenApiSecurityScheme);
 });
 

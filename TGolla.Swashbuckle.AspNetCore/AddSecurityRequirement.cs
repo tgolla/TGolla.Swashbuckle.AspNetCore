@@ -23,26 +23,18 @@ namespace TGolla.Swashbuckle.AspNetCore.SwaggerGen
 
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            //TODO: Document and refactor 
             // Policy names map to scopes
             var authorizeAttributes = context.GetControllerAndActionAttributes<AuthorizeAttribute>();
             var authorizeOnAnyOnePolicyAttributes = context.GetControllerAndActionAttributes<AuthorizeOnAnyOnePolicyAttribute>();
 
             // Get list of authorize policies.
-            List<string> authorizeAttributePolicies = authorizeAttributes.Where(x => !string.IsNullOrEmpty(x.Policy))
-                .OrderBy(x => x.Policy).Select(x => x.Policy).ToList();
+            List<string> authorizeAttributePolicies = authorizeAttributes.AuthorizeAttributePolicies();
 
             // Get a list of roles.
-            List<string> authorizeAttributeRoles = authorizeAttributes.Where(x => !string.IsNullOrEmpty(x.Roles))
-                .OrderBy(x => x.Roles).Select(x => x.Roles).ToList();
+            List<string> authorizeAttributeRoles = authorizeAttributes.AuthorizeAttributeRoles();
 
             // Get list of authorize on any one policy policies. 
-            List<string> authorizeOnAnyOnePolicyAttributePolicies = new List<string>();
-            if (authorizeOnAnyOnePolicyAttributes.Any())
-            {
-                authorizeOnAnyOnePolicyAttributePolicies = authorizeOnAnyOnePolicyAttributes.First().Arguments[0]
-                    .ToString().Split(",").OrderBy(x => x).ToList();
-            }
+            List<string> authorizeOnAnyOnePolicyAttributePolicies = authorizeOnAnyOnePolicyAttributes.AuthorizeOnAnyOnePolicyAttributePolicies();
 
             List<string> requiredScopes = authorizeAttributePolicies;
             requiredScopes.AddRange(authorizeAttributeRoles); 
