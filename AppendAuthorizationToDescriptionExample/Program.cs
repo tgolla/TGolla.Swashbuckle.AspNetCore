@@ -122,8 +122,9 @@ builder.Services.AddSwaggerGen(c =>
     c.IncludeXmlComments(xmlPath);
 
     c.EnableAnnotations();
-    
-    //TODO: Document...
+
+    // When using the AddSecurityRequirement operation filter it also makes
+    // sense to set the excludeAllowAnonymousDescription parameter argument to true.
     c.OperationFilter<AppendAuthorizationToDescription>(true);
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -135,26 +136,38 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "Bearer"
     });
 
-    var addSecurityRequirementOpenApiSecurityScheme = new OpenApiSecurityScheme
+    // When you define a security schema by invoking the `AddSecurityDefinition` method you also need
+    // to indicate which operations that scheme is applicable to. You can apply schemes globally
+    // (i.e. to ALL operations) through the `AddSecurityRequirement` method. This is what adds the
+    // Authorize button and unlock/lock icons to the end of each API summary.
+    //c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    //{
+    //    {
+    //        new OpenApiSecurityScheme
+    //        {
+    //            Reference = new OpenApiReference
+    //            {
+    //                Id = "Bearer",
+    //                Type = ReferenceType.SecurityScheme
+    //            }
+    //        },
+    //        new List<string>()
+    //    }
+    //});
+
+    // Or you can be more specific by replacing the AddSecurityRequirement method with the
+    // AddSecurityRequirement operation filter provide in this example. The filter will only
+    // apply the security schema to API actions decorated with either the AuthorizeAttribute
+    // or AuthorizeOnAnyOnePolicyAttribute attributes. In this configuration it also makes
+    // sense to set the excludeAllowAnonymousDescription parameter argument to true.
+    c.OperationFilter<AddSecurityRequirement>(new OpenApiSecurityScheme
     {
         Reference = new OpenApiReference
         {
             Id = "Bearer",
             Type = ReferenceType.SecurityScheme
         }
-    };
-
-    //TODO: Document...
-    //c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-    //            {
-    //                {
-    //                    addSecurityRequirementOpenApiSecurityScheme,
-    //                    new List<string>()
-    //                }
-    //            });
-
-    //TODO: Document...
-    c.OperationFilter<AddSecurityRequirement>(addSecurityRequirementOpenApiSecurityScheme);
+    });
 });
 
 var app = builder.Build();
