@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using AppendAuthorizationToDescriptionExample.Services;
 using TGolla.Swashbuckle.AspNetCore.SwaggerGen;
+using TGolla.Swashbuckle.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -126,27 +127,30 @@ builder.Services.AddSwaggerGen(c =>
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"  A token can be acquired using any one of the /Tokens calls.",
+        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"  A token can be acquired using any one of the /Tokens API calls.",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer"
     });
 
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Id = "Bearer",
-                                Type = ReferenceType.SecurityScheme
-                            }
-                        },
-                        new List<string>()
-                    }
-                });
+    var addSecurityRequirementOpenApiSecurityScheme = new OpenApiSecurityScheme
+    {
+        Reference = new OpenApiReference
+        {
+            Id = "Bearer",
+            Type = ReferenceType.SecurityScheme
+        }
+    };
+
+    //c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    //            {
+    //                {
+    //                    addSecurityRequirementOpenApiSecurityScheme,
+    //                    new List<string>()
+    //                }
+    //            });
+    c.OperationFilter<AddSecurityRequirement>(addSecurityRequirementOpenApiSecurityScheme);
 });
 
 var app = builder.Build();
