@@ -42,20 +42,13 @@ namespace TGolla.Swashbuckle.AspNetCore.SwaggerGen
             var authorizeOnAnyOnePolicyAttributes = context.GetControllerAndActionAttributes<AuthorizeOnAnyOnePolicyAttribute>();
 
             // Get list of authorize policies.
-            List<string> authorizeAttributePolicies = authorizeAttributes.Where(x => !string.IsNullOrEmpty(x.Policy))
-                .OrderBy(x => x.Policy).Select(x => x.Policy).ToList();
+            List<string> authorizeAttributePolicies = authorizeAttributes.AuthorizeAttributePolicies();
 
             // Get a list of roles.
-            List<string> authorizeAttributeRoles = authorizeAttributes.Where(x => !string.IsNullOrEmpty(x.Roles))
-                .OrderBy(x => x.Roles).Select(x => x.Roles).ToList();
+            List<string> authorizeAttributeRoles = authorizeAttributes.AuthorizeAttributeRoles();
 
             // Get list of authorize on any one policy policies. 
-            List<string> authorizeOnAnyOnePolicyAttributePolicies = new List<string>();
-            if (authorizeOnAnyOnePolicyAttributes.Any())
-            {
-                authorizeOnAnyOnePolicyAttributePolicies = authorizeOnAnyOnePolicyAttributes.First().Arguments[0]
-                    .ToString().Split(",").OrderBy(x => x).ToList();
-            }
+            List<string> authorizeOnAnyOnePolicyAttributePolicies = authorizeOnAnyOnePolicyAttributes.AuthorizeOnAnyOnePolicyAttributePolicies();
 
             if (authorizeAttributePolicies.Any())
                 operation.Description += $"\r\n\r\nAuthorization requires {((authorizeAttributePolicies.Count > 1) ? "each of " : "")} the following {((authorizeAttributePolicies.Count > 1) ? "policies" : "policy")}: <b>{string.Join("</b>, <b>", authorizeAttributePolicies)}</b>";

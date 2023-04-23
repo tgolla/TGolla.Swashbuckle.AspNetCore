@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using AppendAuthorizationToDescriptionExample.Services;
 using TGolla.Swashbuckle.AspNetCore.SwaggerGen;
+using TGolla.Swashbuckle.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -121,32 +122,52 @@ builder.Services.AddSwaggerGen(c =>
     c.IncludeXmlComments(xmlPath);
 
     c.EnableAnnotations();
-    
-    c.OperationFilter<AppendAuthorizationToDescription>();
+
+    // When using the AddSecurityRequirement operation filter it also makes
+    // sense to set the excludeAllowAnonymousDescription parameter argument to true.
+    c.OperationFilter<AppendAuthorizationToDescription>(true);
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"  A token can be acquired using any one of the /Tokens calls.",
+        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"  A token can be acquired using any one of the /Tokens API calls.",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer"
     });
 
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Id = "Bearer",
-                                Type = ReferenceType.SecurityScheme
-                            }
-                        },
-                        new List<string>()
-                    }
-                });
+    // When you define a security schema by invoking the `AddSecurityDefinition` method you also need
+    // to indicate which operations that scheme is applicable to. You can apply schemes globally
+    // (i.e. to ALL operations) through the `AddSecurityRequirement` method. This is what adds the
+    // Authorize button and unlock/lock icons to the end of each API summary.
+    //c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    //{
+    //    {
+    //        new OpenApiSecurityScheme
+    //        {
+    //            Reference = new OpenApiReference
+    //            {
+    //                Id = "Bearer",
+    //                Type = ReferenceType.SecurityScheme
+    //            }
+    //        },
+    //        new List<string>()
+    //    }
+    //});
+
+    // Or you can be more specific by replacing the AddSecurityRequirement method with the
+    // AddSecurityRequirement operation filter provide in this example. The filter will only
+    // apply the security schema to API actions decorated with either the AuthorizeAttribute
+    // or AuthorizeOnAnyOnePolicyAttribute attributes. In this configuration it also makes
+    // sense to set the excludeAllowAnonymousDescription parameter argument to true.
+    c.OperationFilter<AddSecurityRequirement>(new OpenApiSecurityScheme
+    {
+        Reference = new OpenApiReference
+        {
+            Id = "Bearer",
+            Type = ReferenceType.SecurityScheme
+        }
+    });
 });
 
 var app = builder.Build();
