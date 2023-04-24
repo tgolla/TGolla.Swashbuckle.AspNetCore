@@ -14,6 +14,14 @@ namespace AppendAuthorizationToDescriptionExample.Controllers
     public class AuthorizationController : Controller
     {
         /// <summary>
+        /// Test for an anonymous user.
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet("TestForAnAnonymousUser")]
+        public IActionResult TestForAnAnonymousUser() { return Ok(); }
+
+        /// <summary>
         /// Test for an authenticated user. No group privileges needed.
         /// </summary>
         /// <returns></returns>
