@@ -1,6 +1,6 @@
 ﻿using TGolla.AspNetCore.Mvc.Filters;
 
-namespace TGolla.Swashbuckle.AspNetCore
+namespace TGolla.Swashbuckle.AspNetCore.SwaggerGen
 {
     /// <summary>
     /// IEnumerable AuthorizeOnAnyOnePolicyAttribute extensions.
