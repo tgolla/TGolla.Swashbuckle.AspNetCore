@@ -23,6 +23,9 @@ namespace TGolla.Swashbuckle.AspNetCore.SwaggerGen
 
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
+            if (context.GetControllerAndActionAttributes<AllowAnonymousAttribute>().Any())
+                return;
+
             // Policy names map to scopes
             var authorizeAttributes = context.GetControllerAndActionAttributes<AuthorizeAttribute>();
             var authorizeOnAnyOnePolicyAttributes = context.GetControllerAndActionAttributes<AuthorizeOnAnyOnePolicyAttribute>();
@@ -40,12 +43,12 @@ namespace TGolla.Swashbuckle.AspNetCore.SwaggerGen
             requiredScopes.AddRange(authorizeAttributeRoles); 
             requiredScopes.AddRange(authorizeOnAnyOnePolicyAttributePolicies);
 
-            if (authorizeAttributes.Any() || authorizeOnAnyOnePolicyAttributes.Any())
+            if (authorizeAttributes.Any() || requiredScopes.Any())
             {
                 if (!operation.Responses.ContainsKey("401"))
                     operation.Responses.Add("401", new OpenApiResponse { Description = "Unauthorized" });
 
-                if (authorizeAttributePolicies.Any() || authorizeAttributeRoles.Any() || authorizeOnAnyOnePolicyAttributePolicies.Any())
+                if (requiredScopes.Any())
                 {
                     if (!operation.Responses.ContainsKey("403"))
                         operation.Responses.Add("403", new OpenApiResponse { Description = "Forbidden" });
