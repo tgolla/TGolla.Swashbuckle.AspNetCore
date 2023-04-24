@@ -42,8 +42,14 @@ namespace TGolla.Swashbuckle.AspNetCore.SwaggerGen
 
             if (authorizeAttributes.Any() || authorizeOnAnyOnePolicyAttributes.Any())
             {
-                operation.Responses.Add("401", new OpenApiResponse { Description = "Unauthorized" });
-                operation.Responses.Add("403", new OpenApiResponse { Description = "Forbidden" });
+                if (!operation.Responses.ContainsKey("401"))
+                    operation.Responses.Add("401", new OpenApiResponse { Description = "Unauthorized" });
+
+                if (authorizeAttributePolicies.Any() || authorizeAttributeRoles.Any() || authorizeOnAnyOnePolicyAttributePolicies.Any())
+                {
+                    if (!operation.Responses.ContainsKey("403"))
+                        operation.Responses.Add("403", new OpenApiResponse { Description = "Forbidden" });
+                }
 
                 operation.Security = new List<OpenApiSecurityRequirement>
                 {
