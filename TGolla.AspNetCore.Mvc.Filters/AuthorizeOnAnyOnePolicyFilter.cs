@@ -27,7 +27,7 @@ namespace TGolla.AspNetCore.Mvc.Filters
         /// <returns>Sets the context.Result to ForbidResult() if the user fails all of the policies listed.</returns>
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
-            var policies = Policies.Split(",").ToList();
+            var policies = Policies.Split(",", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).ToList();
 
             // Loop through policies.  User need only belong to one policy to be authorized.
             foreach (var policy in policies)
