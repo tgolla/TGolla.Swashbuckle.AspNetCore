@@ -76,7 +76,8 @@ builder.Services.AddAuthorization(options =>
 });
 
 string assemblyName = Assembly.GetEntryAssembly().GetName().Name;
-string assemblyInformationalVersion = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+string informationalVersion = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+string assemblyInformationalVersion = informationalVersion.Substring(0, informationalVersion.IndexOf('+'));
 string title = "Append Authorization To Description Example";
 string currentDocumentName = "current";
 
