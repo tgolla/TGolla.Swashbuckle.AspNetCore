@@ -127,19 +127,11 @@ When you define a security schema by invoking the ```AddSecurityDefinition``` me
 builder.Services.AddSwaggerGen(c =>
 {
 	...
-	c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+	c.AddSecurityRequirement(doc => new OpenApiSecurityRequirement
     {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Id = "Bearer",
-                    Type = ReferenceType.SecurityScheme
-                }
-            },
-            new List<string>()
-        }
+        [
+            new OpenApiSecuritySchemeReference("Bearer", doc)
+        ] = new List<string>()
     });
     ...
 }
@@ -153,14 +145,7 @@ builder.Services.AddSwaggerGen(c =>
 	...
     c.OperationFilter<AppendAuthorizationToDescription>(true);
     ...
-    c.OperationFilter<AddSecurityRequirement>(new OpenApiSecurityScheme
-    {
-        Reference = new OpenApiReference
-        {
-            Id = "Bearer",
-            Type = ReferenceType.SecurityScheme
-        }
-    });
+    c.OperationFilter<AddSecurityRequirement>("Bearer")
     ...
 }
 ```
