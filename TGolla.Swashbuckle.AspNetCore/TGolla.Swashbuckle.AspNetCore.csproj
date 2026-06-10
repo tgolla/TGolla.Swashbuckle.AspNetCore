@@ -6,7 +6,7 @@
     <Nullable>disable</Nullable>
     <RootNamespace>TGolla.Swashbuckle.AspNetCore</RootNamespace>
     <PackageId>TGolla.Swashbuckle.AspNetCore</PackageId>
-    <Version>6.0.0.0</Version>
+    <Version>10.0.0.0</Version>
     <Authors>Terence F. Golla</Authors>
     <Company>Cimarron Technology Solutions</Company>
     <Product>TGolla.Swashbuckle.AspNetCore</Product>
@@ -19,8 +19,8 @@
     <PackageProjectUrl>https://github.com/tgolla/TGolla.Swashbuckle.AspNetCore</PackageProjectUrl>
     <RepositoryUrl>https://github.com/tgolla/TGolla.Swashbuckle.AspNetCore</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <AssemblyVersion>6.0.0.0</AssemblyVersion>
-    <FileVersion>6.0.0.0</FileVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+    <FileVersion>10.0.0.0</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>TGolla.Swashbuckle.AspNetCore</Title>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
