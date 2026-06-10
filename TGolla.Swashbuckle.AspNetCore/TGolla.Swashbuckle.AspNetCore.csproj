@@ -32,8 +32,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
-    <PackageReference Include="TGolla.AspNetCore.Mvc.Filters" Version="6.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TGolla.AspNetCore.Mvc.Filters\TGolla.AspNetCore.Mvc.Filters.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,6 +44,10 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SwaggerGen\" />
   </ItemGroup>
 
 </Project>

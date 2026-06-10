@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using TGolla.AspNetCore.Mvc.Filters;
 
@@ -10,15 +10,15 @@ namespace TGolla.Swashbuckle.AspNetCore.SwaggerGen
     /// </summary>
     public class AddSecurityRequirement : IOperationFilter
     {
-        OpenApiSecurityScheme openApiSecurityScheme;
+        private readonly string schemeName;
 
         /// <summary>
         /// Initializes a new instance of the AddSecurityRequirement class.
         /// </summary>
         /// <param name="openApiSecurityScheme"></param>
-        public AddSecurityRequirement(OpenApiSecurityScheme openApiSecurityScheme) 
+        public AddSecurityRequirement(string schemeName)
         {
-            this.openApiSecurityScheme = openApiSecurityScheme;
+            this.schemeName = schemeName;
         }
 
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
@@ -54,13 +54,15 @@ namespace TGolla.Swashbuckle.AspNetCore.SwaggerGen
                         operation.Responses.Add("403", new OpenApiResponse { Description = "Forbidden" });
                 }
 
-                operation.Security = new List<OpenApiSecurityRequirement>
-                {
+                operation.Security =
+                [
                     new OpenApiSecurityRequirement
                     {
-                        [ openApiSecurityScheme ] = requiredScopes.ToList()
+                        [
+                            new OpenApiSecuritySchemeReference(schemeName, context.Document)
+                        ] = requiredScopes.ToList()
                     }
-                };
+                ];
             }
         }
     }
