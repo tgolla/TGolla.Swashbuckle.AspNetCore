@@ -12,9 +12,12 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
-    <PackageReference Include="TGolla.Swashbuckle.AspNetCore" Version="6.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="10.2.1" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\TGolla.Swashbuckle.AspNetCore\TGolla.Swashbuckle.AspNetCore.csproj" />
   </ItemGroup>
 
 </Project>
