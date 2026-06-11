@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using NetCore.AutoRegisterDi;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Reflection;
@@ -141,19 +141,11 @@ builder.Services.AddSwaggerGen(c =>
     // to indicate which operations that scheme is applicable to. You can apply schemes globally
     // (i.e. to ALL operations) through the `AddSecurityRequirement` method. This is what adds the
     // Authorize button and unlock/lock icons to the end of each API summary.
-    //c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    //c.AddSecurityRequirement(doc => new OpenApiSecurityRequirement
     //{
-    //    {
-    //        new OpenApiSecurityScheme
-    //        {
-    //            Reference = new OpenApiReference
-    //            {
-    //                Id = "Bearer",
-    //                Type = ReferenceType.SecurityScheme
-    //            }
-    //        },
-    //        new List<string>()
-    //    }
+    //    [
+    //        new OpenApiSecuritySchemeReference("Bearer", doc)
+    //    ] = new List<string>()
     //});
 
     // Or you can be more specific by replacing the AddSecurityRequirement method with the
@@ -161,14 +153,7 @@ builder.Services.AddSwaggerGen(c =>
     // apply the security schema to API actions decorated with either the AuthorizeAttribute
     // or AuthorizeOnAnyOnePolicyAttribute attributes. In this configuration it also makes
     // sense to set the excludeAllowAnonymousDescription parameter argument to true.
-    c.OperationFilter<AddSecurityRequirement>(new OpenApiSecurityScheme
-    {
-        Reference = new OpenApiReference
-        {
-            Id = "Bearer",
-            Type = ReferenceType.SecurityScheme
-        }
-    });
+    c.OperationFilter<AddSecurityRequirement>("Bearer");
 });
 
 var app = builder.Build();

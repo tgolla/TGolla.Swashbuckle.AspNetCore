@@ -1,12 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>TGolla.AspNetCore.Mvc.Filters</RootNamespace>
     <PackageId>TGolla.AspNetCore.Mvc.Filters</PackageId>
-    <Version>6.0.0.0</Version>
+    <Version>10.0.0.0</Version>
     <Authors>Terence F. Golla</Authors>
     <Company>Cimarron Technology Solutions</Company>
     <Product>TGolla.AspNetCore.Mvc.Filters</Product>
@@ -16,22 +16,23 @@ AuthorizeOnAnyOnePolicy</Description>
     <PackageProjectUrl>https://stackoverflow.com/questions/51443605/how-to-include-multiple-policies</PackageProjectUrl>
     <RepositoryUrl>https://github.com/tgolla/TGolla.Swashbuckle.AspNetCore</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <AssemblyVersion>6.0.0.0</AssemblyVersion>
-    <FileVersion>6.0.0.0</FileVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+    <FileVersion>10.0.0.0</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>TGolla.AspNetCore.Mvc.Filters</Title>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <PackageTags>ASP.NET;Authorize;attribute;policy;JWT;TypeFilterAttribute;IAsyncAuthorizationFilter;AspNetCore.Mvc.Filters;AuthorizeOnAnyOnePolicyAttribute;AuthorizeOnAnyOnePolicy</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <IncludeSymbols>True</IncludeSymbols>
-    <PackageReleaseNotes>This is an initial pre-release.</PackageReleaseNotes>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="7.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="10.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.3.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.10" />
+    <!-- Explicitly reference a non-vulnerable Newtonsoft.Json to override any transitive older versions -->
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
 
   <ItemGroup>

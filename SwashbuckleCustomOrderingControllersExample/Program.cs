@@ -6,7 +6,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
 
 // Used by alternate example of sort by controller and then HTTP method as ordered in array.
 string[] methodsOrder = new string[7] { "get", "post", "put", "patch", "delete", "options", "trace" };
@@ -44,7 +43,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-app.UseSwagger();
+app.MapSwagger();
 
 app.UseSwaggerUI(c =>
 {
