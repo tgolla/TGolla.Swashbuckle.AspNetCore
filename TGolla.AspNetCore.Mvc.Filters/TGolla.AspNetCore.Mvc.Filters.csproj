@@ -24,7 +24,6 @@ AuthorizeOnAnyOnePolicy</Description>
     <PackageTags>ASP.NET;Authorize;attribute;policy;JWT;TypeFilterAttribute;IAsyncAuthorizationFilter;AspNetCore.Mvc.Filters;AuthorizeOnAnyOnePolicyAttribute;AuthorizeOnAnyOnePolicy</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <IncludeSymbols>True</IncludeSymbols>
-    <PackageReleaseNotes>This is an initial pre-release.</PackageReleaseNotes>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 

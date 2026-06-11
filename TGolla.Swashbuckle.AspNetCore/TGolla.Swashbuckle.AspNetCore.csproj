@@ -27,7 +27,6 @@
     <PackageTags>ASP.NET;Swagger;Swashbuckle;Attribute;Order Controllers;Authentication;Authorization;policy;policies;role;roles;SwaggerControllerOrderAttribute;IOperationFilter;TGolla.Swashbuckle.AspNetCore</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <IncludeSymbols>True</IncludeSymbols>
-    <PackageReleaseNotes>This is an initial pre-release.</PackageReleaseNotes>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
