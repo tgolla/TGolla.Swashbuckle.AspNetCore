@@ -32,10 +32,7 @@
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\TGolla.AspNetCore.Mvc.Filters\TGolla.AspNetCore.Mvc.Filters.csproj" />
+    <PackageReference Include="TGolla.AspNetCore.Mvc.Filters" Version="10.0.0" />
   </ItemGroup>
 
   <ItemGroup>
